@@ -1,0 +1,5 @@
+package playfair
+
+object Playfair {
+
+}
