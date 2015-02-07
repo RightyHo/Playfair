@@ -21,9 +21,9 @@ object Playfair {
 		} while(!readyToQuit)
 	}
 
+	// need to add test's for this method
 	def runEncode = {
 		val key: String = readLine("Please enter the key word: ")
-				//check that key is a letter
 				if(validKey(key)){
 					val code = new Coder(key)
 					val plainText = readLine("Please enter the name of a file to be encoded") 
@@ -40,10 +40,10 @@ object Playfair {
 				  println("The key word you entered is invalid!  It must be comprised of only letters.")
 				}
 	}
-
+	
+	// need to add test's for this method
 	def runDecode = {
 		val key: String = readLine("Please enter the key word: ")
-				//check that key is a letter
 				if(validKey(key)){
 					val code = new Coder(key)
 					val codedText = readLine("Please enter the name of a file to be decoded") 
@@ -61,6 +61,7 @@ object Playfair {
 				}
 	}
 
+	// need to add test's for this method
 	def validKey(key: String): Boolean = {
 		val existsNonLetter = key.filter(c => !c.isLetter)
 		existsNonLetter.length() == 0
