@@ -51,11 +51,29 @@ class CoderTest extends FunSuite with BeforeAndAfter {
   }
   
   test("encode returns string with letters in blocks of 5, with a single space between blocks. Last block may contain fewer than 5 characters"){
-    ???
+    val output = tCoder.encode("I'm going to look for a space in this output believe you me!")
+    assert(output != null)
+    assert(output.isInstanceOf[String])
+    assert(output.charAt(0) != ' ')
+    assert(output.charAt(1) != ' ')
+    assert(output.charAt(2) != ' ')
+    assert(output.charAt(3) != ' ')
+    assert(output.charAt(4) != ' ')
+    assert(output.charAt(5) == ' ')
+    assert(output.charAt(6) != ' ')
+    assert(output.charAt(11) == ' ')
+    assert(output.charAt(17) == ' ')
   }
   
   test("encode method returns string with ten blocks per line - the last line may have fewer blocks"){
-    ???
+     val output = tCoder.encode("oneon twotw three fourf fivef sixsi seven eight ninen tente\neleve twelv thirt fourt fifte sixte seven eight ninet twent\ntweon twetw tweth twfou twfiv")
+    assert(output != null)
+    assert(output.isInstanceOf[String])
+    var count = 0
+    var reachedNewLine = false
+    val charArray: Array[Char] = output.toCharArray()
+    //up to here...need to add more code to figure out when the new line marker appears!
+    
   }
   
   test("encode method returns string with no whitespace at the beginning or the end, and only a single space or a single newline between blocks"){
