@@ -3,6 +3,11 @@ package playfair
 import java.io._
 import scala.io.Source
 
+/*
+ * @author Andrew Ho
+ * Scala features yet to be incorporated in my code:
+ * - map, foldLeft (or /:), foldRight (or :\), yield, and Some.
+ */
 object Playfair {
 	def main(args: Array[String]) = {
 		var readyToQuit = false
@@ -63,7 +68,11 @@ object Playfair {
 
 	// need to add test's for this method
 	def validKey(key: String): Boolean = {
+		if(key == null) return false
+		else if(key.length() == 0) return false
+		else {
 		val existsNonLetter = key.filter(c => !c.isLetter)
 		existsNonLetter.length() == 0
+		}
 	}
 }
