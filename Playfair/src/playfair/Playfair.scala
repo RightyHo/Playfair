@@ -5,8 +5,16 @@ import scala.io.Source
 
 /*
  * @author Andrew Ho
+ * Main method for the project.  Handles the user interface.
  * Scala features yet to be incorporated in my code:
- * - map, foldLeft (or /:), foldRight (or :\), yield, and Some.
+ * - map
+ * - foldLeft (or /:)
+ * - foldRight (or :\)
+ * - yield
+ * - Some
+ * - Array
+ * - for
+ * - List
  */
 object Playfair {
 	def main(args: Array[String]) = {
@@ -26,7 +34,11 @@ object Playfair {
 		} while(!readyToQuit)
 	}
 
-	// need to add test's for this method
+	/*
+	 * Helper method to make the main method easier to read.  
+	 * Requests key word and file name.
+	 * Calls encode method with the user supplied input parameter  
+	 */
 	def runEncode = {
 		val key: String = readLine("Please enter the key word: ")
 				if(validKey(key)){
@@ -46,7 +58,11 @@ object Playfair {
 				}
 	}
 	
-	// need to add test's for this method
+	/*
+	 * Helper method to make the main method easier to read.  
+	 * Requests key word and file name.
+	 * Calls decode method with the user supplied input parameter   
+	 */
 	def runDecode = {
 		val key: String = readLine("Please enter the key word: ")
 				if(validKey(key)){
@@ -66,7 +82,10 @@ object Playfair {
 				}
 	}
 
-	// need to add test's for this method
+	/*
+	 * Checks that the key provided is a string containing only letters
+	 * @param key the string to be tested
+	 */
 	def validKey(key: String): Boolean = {
 		if(key == null) return false
 		else if(key.length() == 0) return false
