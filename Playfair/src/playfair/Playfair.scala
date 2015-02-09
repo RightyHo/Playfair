@@ -36,7 +36,7 @@ object Playfair {
 
 	/*
 	 * Helper method to make the main method easier to read.  
-	 * Requests key word and file name.
+	 * Requests key word and file name.  Retrieves data from the file.
 	 * Calls encode method with the user supplied input parameter  
 	 */
 	def runEncode = {
@@ -60,7 +60,7 @@ object Playfair {
 	
 	/*
 	 * Helper method to make the main method easier to read.  
-	 * Requests key word and file name.
+	 * Requests key word and file name.  Retrieves data from the file.
 	 * Calls decode method with the user supplied input parameter   
 	 */
 	def runDecode = {
