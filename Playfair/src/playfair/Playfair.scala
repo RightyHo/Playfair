@@ -12,8 +12,6 @@ import scala.io.Source
  * - foldRight (or :\)
  * - yield
  * - Some
- * - Array
- * - for
  * - List
  */
 object Playfair {
