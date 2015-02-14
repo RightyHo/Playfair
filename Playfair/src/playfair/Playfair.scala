@@ -10,9 +10,7 @@ import scala.io.Source
  * - map
  * - foldLeft (or /:)
  * - foldRight (or :\)
- * - yield
  * - Some
- * - List
  */
 object Playfair {
 	def main(args: Array[String]) = {
