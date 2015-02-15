@@ -11,7 +11,7 @@ class Coder(val keyword: String) {
   	var codeBlock = new Array[Array[Char]](NumRows)   
   	
     // concatenate the keyword with the alphabet
-    val tableElements: List[Char] = keyword.toList ++ List('a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z')
+    val tableElements: List[Char] = keyword.toLowerCase().toList ++ List('a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z')
 
     // replace all instances of the character j with i
     def replaceJ(ch: Char):Char = {
@@ -50,9 +50,23 @@ class Coder(val keyword: String) {
 
 
   def encode(plainText: String): String = {
+    //clean up plainText string
     val lowCasePT: String = plainText.toLowerCase()
     val PTchars: Array[Char] = lowCasePT.toCharArray()
-    val onlyLetters = PTchars.filter(_.isLetter)
+    val onlyLetters: Array[Char] = PTchars.filter(_.isLetter)
+    
+    // put an 'x' between double pairs or a 'q' between a double 'xx' 
+    val noDoublePairs: List[Char] = {
+      val chList: List[Char] = onlyLetters.toList
+      for(ch <- 0 until chList.size){
+        if(ch)
+      }
+    }
+    
+    //map input char array to an output char array using the cipherTable to encode
+
+}
+    
     
     return ???
   }
