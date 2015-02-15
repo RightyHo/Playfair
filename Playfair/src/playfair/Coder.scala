@@ -51,6 +51,8 @@ class Coder(val keyword: String) {
 
   def encode(plainText: String): String = {
     val lowCasePT: String = plainText.toLowerCase()
+    val PTchars: Array[Char] = lowCasePT.toCharArray()
+    val onlyLetters = PTchars.filter(_.isLetter)
     
     return ???
   }
