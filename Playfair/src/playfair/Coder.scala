@@ -1,5 +1,7 @@
 package playfair
 
+import scala.collection.mutable.ListBuffer
+
 class Coder(val keyword: String) {
   
   private val NumRows = 5
@@ -54,22 +56,38 @@ class Coder(val keyword: String) {
     val lowCasePT: String = plainText.toLowerCase()
     val PTchars: Array[Char] = lowCasePT.toCharArray()
     val onlyLetters: Array[Char] = PTchars.filter(_.isLetter)
+    val letterList: List[Char] = onlyLetters.toList
     
     // put an 'x' between double pairs or a 'q' between a double 'xx' 
-    val noDoublePairs: List[Char] = {
-      val chList: List[Char] = onlyLetters.toList
-      for(ch <- 0 until chList.size){
-        if(ch)
+    def removeDoublePairs(letters: List[Char]): List[Char] = {
+      if(letters.size <= 0){
+        return List()
+      } else {
+    	  if(letters.size <= 1){
+    	    return letters(0) :: List('z')
+    	  } else {
+    		  if(letters(0) == letters(1)){
+    		    if(letters(0) == 'x'){
+    		      return List('x','q') ::: removeDoublePairs(letters.drop(1))
+    		    } else {
+    		      return List(letters(0),'x') ::: removeDoublePairs(letters.drop(1))
+    		    }
+    		  } else {
+    		    return List(letters(0),letters(1)) ::: removeDoublePairs(letters.drop(2))
+    		  }
+    	  }
       }
     }
-    
-    //map input char array to an output char array using the cipherTable to encode
+ 
+    val noDoublePairs: List[Char] = removeDoublePairs(letterList)
 
-}
-    
+    //map input char array to an output char array using the cipherTable to encode
     
     return ???
   }
+
+    
+
   
   
   
