@@ -80,8 +80,14 @@ class Coder(val keyword: String) {
     }
  
     val noDoublePairs: List[Char] = removeDoublePairs(letterList)
+    val preprocessedTuples = noDoublePairs.grouped(2).toList
 
-    //map input char array to an output char array using the cipherTable to encode
+    //map input char tuples to an output list of char tuples using the cipherTable to encode
+    def f(c: List[Char]) = {
+      //if(codeBlock.contains(c._1)){int xIndex = codeBlock.indexOf(c._1}
+    } 
+    
+    preprocessedTuples.map(x => f(x))
     
     return ???
   }
