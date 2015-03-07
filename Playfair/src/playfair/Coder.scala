@@ -142,11 +142,43 @@ class Coder(val keyword: String) {
         result :::= List(cipherTable(encryptedSecondRow)(encryptedSecondCol))
       }
     }
-    return result.reverse.toString
+ 
+    return formatOutput(result.reverse)
   }
 
-    
-
+    // The return value should be all lowercase; letters should be blocks of 5, with a single space between blocks (the last block may contain fewer than 5 characters).
+    // There will be ten blocks per line (the last line may have fewer blocks).
+    // There should be no whitespace at the beginning or the end, and only a single space or a single newline between blocks.  All the punctuation should be discarded.
+  def formatOutput(cList: List[Char]): String = {
+    val numBlocks: Int = if(cList.size % 5 == 0) cList.size / 5 else cList.size / 5 + 1
+    val numLines: Int = if(numBlocks % 10 == 0) numBlocks / 10 else numBlocks / 10 + 1
+    val strOutList: List[Char] = {
+      var output = List[Char]()
+      for(i <- 0 until numLines){
+        if(i >= numLines - 1){
+        	for(j <- 0 until numBlocks){
+        		output = output :+ cList(j * 5)
+        		output = output :+ cList(j * 5 + 1)
+        		output = output :+ cList(j * 5 + 2)
+      			output = output :+ cList(j * 5 + 3)
+      			output = output :+ cList(j * 5 + 4)
+       			output = output :+ ' '
+        	}
+        	output = output :+ '\n'
+      	} else {
+      		for(j <- 0 until 10){
+        		output = output :+ cList(j * 5)
+        		output = output :+ cList(j * 5 + 1)
+        		output = output :+ cList(j * 5 + 2)
+        		output = output :+ cList(j * 5 + 3)
+        		output = output :+ cList(j * 5 + 4)
+      			output = output :+ ' '
+        	}
+        	output = output :+ '\n'
+      	}
+    }
+    return output
+  }
   
   
   
