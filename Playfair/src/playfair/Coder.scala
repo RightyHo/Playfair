@@ -150,38 +150,29 @@ class Coder(val keyword: String) {
     // There will be ten blocks per line (the last line may have fewer blocks).
     // There should be no whitespace at the beginning or the end, and only a single space or a single newline between blocks.  All the punctuation should be discarded.
   def formatOutput(cList: List[Char]): String = {
-    val numBlocks: Int = if(cList.size % 5 == 0) cList.size / 5 else cList.size / 5 + 1
-    val numLines: Int = if(numBlocks % 10 == 0) numBlocks / 10 else numBlocks / 10 + 1
-    val strOutList: List[Char] = {
-      var output = List[Char]()
-      for(i <- 0 until numLines){
-        if(i >= numLines - 1){
-        	for(j <- 0 until numBlocks){
-        		output = output :+ cList(j * 5)
-        		output = output :+ cList(j * 5 + 1)
-        		output = output :+ cList(j * 5 + 2)
-      			output = output :+ cList(j * 5 + 3)
-      			output = output :+ cList(j * 5 + 4)
-       			output = output :+ ' '
-        	}
-        	output = output :+ '\n'
-      	} else {
-      		for(j <- 0 until 10){
-        		output = output :+ cList(j * 5)
-        		output = output :+ cList(j * 5 + 1)
-        		output = output :+ cList(j * 5 + 2)
-        		output = output :+ cList(j * 5 + 3)
-        		output = output :+ cList(j * 5 + 4)
-      			output = output :+ ' '
-        	}
-        	output = output :+ '\n'
-      	}
+    var output = List[Char]()
+    var index: Int = 0
+    var letterCount: Int = 0
+    var blockCount: Int = 0
+    while(index < cList.size){
+      if(letterCount >= 5) {
+        if(blockCount >= 10){
+          output = output :+ '\n'
+          blockCount = 0
+          letterCount = 0
+        } else {
+          output = output :+ ' '
+          blockCount += 1 
+          letterCount = 0  
+          }
+      } else {
+          output = output :+ cList(index)
+          letterCount += 1
+          index += 1
+      }
     }
-    return output
-  }
-  
-  
-  
+    return output.toString
+  } 
   
   def decode(secretTest: String): String = ???
 		 
