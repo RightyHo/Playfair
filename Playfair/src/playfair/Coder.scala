@@ -56,7 +56,8 @@ class Coder(val keyword: String) {
     //clean up plainText string
     val lowCasePT: String = plainText.toLowerCase()
     val PTchars: Array[Char] = lowCasePT.toCharArray()
-    val onlyLetters: Array[Char] = PTchars.filter(_.isLetter)
+    val allOneLine: Array[Char] = PTchars.filter(_.!=('\n'))
+    val onlyLetters: Array[Char] = allOneLine.filter(_.isLetter)
     val letterList: List[Char] = onlyLetters.toList
     
     // put an 'x' between double pairs or a 'q' between a double 'xx'.  If a final letter is needed to complete a pair, use ’z’.
@@ -80,8 +81,8 @@ class Coder(val keyword: String) {
       }
     }
  
-    val noDoublePairs: List[Char] = removeDoublePairs(letterList)
-    val digraphs = noDoublePairs.grouped(2).toList
+    val noDoublePairs: List[Char] = removeDoublePairs(letterList)   
+    val digraphs = if(noDoublePairs.size % 2 == 1) noDoublePairs.dropRight(1).grouped(2).toList else noDoublePairs.grouped(2).toList
     
     // find coordinates of Character in cipherTable: Array[Array[Char]]
     def getCoordinates(c: Char): Tuple2[Int,Int] = {
@@ -153,12 +154,12 @@ class Coder(val keyword: String) {
     var output = List[Char]()
     var index: Int = 0
     var letterCount: Int = 0
-    var blockCount: Int = 0
+    var blockCount: Int = 1
     while(index < cList.size){
       if(letterCount >= 5) {
         if(blockCount >= 10){
           output = output :+ '\n'
-          blockCount = 0
+          blockCount = 1
           letterCount = 0
         } else {
           output = output :+ ' '
@@ -171,7 +172,7 @@ class Coder(val keyword: String) {
           index += 1
       }
     }
-    return output.toString
+    return output mkString
   } 
   
   def decode(secretTest: String): String = ???
