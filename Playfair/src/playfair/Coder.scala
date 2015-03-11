@@ -175,6 +175,79 @@ class Coder(val keyword: String) {
     return output mkString
   } 
   
-  def decode(secretTest: String): String = ???
+  def decode(secretTest: String): String = {
+	var result = List[Char]()
+    //clean up plainText string
+    val lowCasePT: String = secretTest.toLowerCase()
+    val PTchars: Array[Char] = lowCasePT.toCharArray()
+    val allOneLine: Array[Char] = PTchars.filter(_.!=('\n'))
+    val onlyLetters: Array[Char] = allOneLine.filter(_.isLetter)
+    val letterList: List[Char] = onlyLetters.toList
+    
+  
+    val digraphs: List[List[Char]] = if(letterList.size % 2 == 1) (letterList:::List('z')).grouped(2).toList else letterList.grouped(2).toList
+    
+    // find coordinates of Character in cipherTable: Array[Array[Char]]
+    def getCoordinates(c: Char): Tuple2[Int,Int] = {
+      var row: Int = -1
+      var col: Int = -1
+      for(i <- 0 until NumRows)
+        if(cipherTable(i).contains(c))
+          row = i
+      for(j <- 0 until NumCols)
+        if(cipherTable(row)(j) == c)
+          col = j
+        return Tuple2(row,col)
+    }
+     
+    // get coordinates (rowNumber,columnNumber) for the decoded char that the encoded char maps to
+    
+    for(pair <- digraphs){
+      val char1Coords: Tuple2[Int,Int] = getCoordinates(pair(0))
+      val char2Coords: Tuple2[Int,Int] = getCoordinates(pair(1))
+     
+      // If the letters appear on the same row of your table, replace them with the letters to their immediate
+      // left respectively (wrapping around to the right side of the row if a letter in the original pair was on the left side of the row).
+      if(char1Coords._1 == char2Coords._1){
+        if(char1Coords._2 <= 0){
+          result :::= List(cipherTable(char1Coords _1)(NumCols - 1))
+        } else {
+          result :::= List(cipherTable(char1Coords._1)(char1Coords._2 - 1))
+        }
+        if(char2Coords._2 <= 0){
+          result :::= List(cipherTable(char2Coords _1)(NumCols - 1))
+        } else {
+          result :::= List(cipherTable(char2Coords._1)(char2Coords._2 - 1))
+        }
+        
+      // If the letters appear on the same column of your table, replace them with the letters immediately
+      // above respectively (wrapping around to the bottom side of the column if a letter in the original pair was on the top side of the column).
+      } else if(char1Coords._2 == char2Coords._2){
+        if(char1Coords._1 <= 0){
+          result :::= List(cipherTable(NumRows -1)(char1Coords _2))
+        } else {
+          result :::= List(cipherTable(char1Coords._1 - 1)(char1Coords._2))
+        }
+        if(char2Coords._1 <= 0){
+          result :::= List(cipherTable(NumRows -1)(char2Coords _2))
+        } else {
+          result :::= List(cipherTable(char2Coords._1 - 1)(char2Coords._2))
+        }
+        
+      // If the letters are not on the same row or column, replace them with the letters on the same row respectively but at the other pair of
+      // corners of the rectangle defined by the original pair. The order is important – the first letter of the encrypted pair is the one that
+      // lies on the same row as the first letter of the plaintext pair.
+      } else {
+        val encryptedFirstRow = char1Coords._1
+        val encryptedFirstCol = char2Coords._2
+        val encryptedSecondRow = char2Coords._1
+        val encryptedSecondCol = char1Coords._2
+        result :::= List(cipherTable(encryptedFirstRow)(encryptedFirstCol))
+        result :::= List(cipherTable(encryptedSecondRow)(encryptedSecondCol))
+      }
+    }
+ 		val removeXs = result.reverse.filter(_!='x')
+    return formatOutput(removeXs)
+  }
 		 
 }
